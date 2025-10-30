@@ -1,46 +1,133 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>स्थळ पोथी - मुख्य पृष्ठ</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="particles.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ब्रह्मविद्या कल्पद्रुम</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blur: 18px;
+      --glass-bg: rgba(255, 255, 255, 0.10);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.25);
+      --accent: #b3e0ff;
+      --text-color: #eaf6ff;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url("6817E49C-F00E-4015-82B6-78D8B22EB4AF.jpeg") no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Tiro Devanagari Marathi', serif;
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--accent);
+      text-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    p {
+      opacity: 0.85;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    main {
+      width: 90%;
+      max-width: 900px;
+      margin-top: 50px;
+      display: grid;
+      gap: 30px;
+    }
+
+    .liquid-glass {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      backdrop-filter: blur(var(--blur));
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      transition: 0.3s ease;
+    }
+
+    .liquid-glass:hover {
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 0 35px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: var(--glass-border);
+      background: rgba(255,255,255,0.1);
+      color: var(--text-color);
+      text-decoration: none;
+    }
+
+    a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      padding-bottom: 40px;
+    }
+  </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+  <header>
+    <h1>ब्रह्मविद्या कल्पद्रुम</h1>
+    <p>श्रीकृष्णरावो म्हणे उद्धवदेवा : हा ज्ञानरत्नाचा ठेवा</p>
+  </header>
 
-    <div class="container">
-        <header>
-            <h1 class="title">स्थळ पोथी 🌿</h1>
-            <p class="subtitle">नैसर्गिक स्थळांच्या कथा आणि शिकवण</p>
-        </header>
-
-        <div class="toggle-panel">
-            <button id="font-small" class="toggle-btn">Aₐ</button>
-            <button id="font-medium" class="toggle-btn active">Aₐₐ</button>
-            <button id="font-large" class="toggle-btn">Aₐₐₐ</button>
-            <button id="theme-toggle" class="toggle-btn">🌙</button>
-        </div>
-
-        <nav class="chapter-list">
-            <a href="chapters/chapter1.html" class="chapter-link">चॅप्टर १: पुर्वी</a>
-            <a href="chapters/chapter2.html" class="chapter-link">चॅप्टर २: अन्यव्यवृती</a>
-            <a href="chapters/chapter3.html" class="chapter-link">चॅप्टर ३: युगधर्म</a>
-            <a href="chapters/chapter4.html" class="chapter-link">चॅप्टर ४: क्रियापाक</a>
-            <a href="chapters/chapter5.html" class="chapter-link">चॅप्टर ५: विद्यामार्ग</a>
-            <a href="chapters/chapter6.html" class="chapter-link">चॅप्टर ६: संहार</a>
-            <a href="chapters/chapter7.html" class="chapter-link">चॅप्टर ७: संसरण</a>
-            <a href="chapters/chapter8.html" class="chapter-link">चॅप्टर ८: उद्धरण</a>
-            <a href="chapters/chapter9.html" class="chapter-link">चॅप्टर ९: महावाक्य</a>
-            <a href="chapters/chapter10.html" class="chapter-link">चॅप्टर १०: निर्वचन</a>
-            <a href="chapters/chapter11.html" class="chapter-link">चॅप्टर ११: आचार</a>
-            <a href="chapters/chapter12.html" class="chapter-link">चॅप्टर १२: विचार</a>
-            <a href="chapters/chapter13.html" class="chapter-link">चॅप्टर १३: आचार मालिका</a>
-            <a href="chapters/chapter14.html" class="chapter-link">चॅप्टर १४: विचार मालिका</a>
-        </nav>
+  <main>
+    <div class="liquid-glass">
+      <h2>सुमनमाला</h2>
+      <a href="#">पूर्ण दृश्य पाहा</a>
     </div>
 
-    <script src="main.js"></script>
+    <div class="liquid-glass">
+      <h2>सूत्रपाठ</h2>
+      <a href="#">पूर्ण दृश्य पाहा</a>
+    </div>
+
+    <div class="liquid-glass">
+      <h2>गीतापाठ</h2>
+      <a href="#">पूर्ण दृश्य पाहा</a>
+    </div>
+
+    <div class="liquid-glass">
+      <h2>स्थळपोथी</h2>
+      <a href="#">पूर्ण दृश्य पाहा</a>
+    </div>
+  </main>
+
+  <footer>
+    श्री देवदत्त आश्रम © सर्व हक्क राखीव
+  </footer>
 </body>
 </html>
