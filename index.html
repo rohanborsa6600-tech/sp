@@ -25,8 +25,8 @@
         /* ========================================================= */
         body {
             margin: 0;
-            min-height: 100vh;
-            /* 👇 येथे background.jpeg हे नाव वापरले आहे (उपाय १ प्रमाणे) */
+            /* ❌ REMOVED: min-height: 100vh; (यामुळे उंची कंटेंटनुसार ॲडजस्ट होईल) */
+            /* 👇 इमेजचे नाव तुम्ही "background.jpeg" ने बदला. */
             background: url("background.jpeg") no-repeat center center/cover;
             background-attachment: fixed; /* Parallax feel without complex JS */
             display: flex;
@@ -42,7 +42,9 @@
         header {
             text-align: center;
             margin-top: 60px;
-            max-width: 800px;
+            /* रुंदी कमी केली */
+            max-width: 600px; 
+            padding: 0 5%;
         }
 
         h1 {
@@ -61,16 +63,18 @@
         }
 
         /* ========================================================= */
-        /* 3. MAIN CONTENT LAYOUT */
+        /* 3. MAIN CONTENT LAYOUT (पॅनलची साईज कमी केली) */
         /* ========================================================= */
         main {
             width: 90%;
-            max-width: 900px;
+            /* 👇 MAX WIDTH कमी केली (उदा. 900px वरून 650px) */
+            max-width: 650px; 
             margin-top: 50px;
             display: grid;
-            gap: 30px;
-            /* 2-Column layout for tablets/desktops */
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 20px; /* गॅप थोडी कमी केली */
+            
+            /* 👇 पॅनलची किमान रुंदी 280px केली, जेणेकरून एका ओळीत २ दिसतील */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
         }
 
         /* ========================================================= */
@@ -82,7 +86,7 @@
             backdrop-filter: blur(var(--blur));
             -webkit-backdrop-filter: blur(var(--blur)); /* Safari support */
             border-radius: 16px;
-            padding: 25px;
+            padding: 20px; /* पॅनलचे पॅडिंग थोडे कमी केले */
             box-shadow: 0 0 25px rgba(0,0,0,0.5);
             transition: var(--transition-speed);
             display: flex;
@@ -93,27 +97,27 @@
         .liquid-glass:hover {
             background: rgba(255, 255, 255, 0.14);
             box-shadow: 0 5px 30px rgba(0,0,0,0.7);
-            transform: translateY(-2px); /* Subtle lift on hover (no shake) */
+            transform: translateY(-2px); 
         }
 
         h2 {
             color: var(--accent);
             margin-bottom: 5px;
-            font-size: 1.8rem;
+            font-size: 1.6rem; /* शीर्षक थोडे लहान केले */
         }
 
         .tags {
             font-size: 0.9rem;
             color: var(--accent);
             opacity: 0.7;
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* मार्जिन कमी केली */
         }
 
         a {
             display: inline-block;
-            align-self: flex-end; /* Push the link to the bottom right */
-            margin-top: 15px;
-            padding: 10px 18px;
+            align-self: flex-end; 
+            margin-top: 10px;
+            padding: 8px 16px; /* बटणचा आकार थोडा कमी केला */
             border-radius: 12px;
             border: var(--glass-border);
             background: rgba(255,255,255,0.08);
@@ -129,7 +133,7 @@
         }
 
         footer {
-            margin-top: 80px;
+            margin-top: 50px; /* मार्जिन कमी केली */
             text-align: center;
             font-size: 0.9rem;
             opacity: 0.7;
