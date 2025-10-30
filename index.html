@@ -6,15 +6,20 @@
     <title>ब्रह्मविद्या कल्पद्रुम</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script> 
 
     <style>
         /* ========================================================= */
-        /* 1. iOS 26 LIQUID GLASS VARIABLES (Clean and Subtle) */
+        /* 1. DARKER iOS 26 LIQUID GLASS VARIABLES */
         /* ========================================================= */
         :root {
             --blur: 18px;
-            --glass-bg: rgba(255, 255, 255, 0.10); /* Subtle white tint */
-            --glass-border: 1px solid rgba(255, 255, 255, 0.25); /* Clean, defined border */
+            --glass-bg: rgba(0, 0, 0, 0.50); 
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15); 
             --accent: #b3e0ff; /* Soft, light blue accent for titles */
             --text-color: #eaf6ff;
             --transition-speed: 0.3s ease;
@@ -25,9 +30,9 @@
         /* ========================================================= */
         body {
             margin: 0;
-            /* 👇 इमेजचे नाव तुम्ही "background.jpeg" ने बदला. */
+            /* IMAGE: "background.jpeg" हे नाव तुमच्या फाइलनुसार बदला */
             background: url("background.jpeg") no-repeat center center/cover;
-            background-attachment: fixed; /* Parallax feel without complex JS */
+            background-attachment: fixed; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,8 +46,7 @@
         header {
             text-align: center;
             margin-top: 60px;
-            /* रुंदी कमी केली */
-            max-width: 600px; 
+            max-width: 900px; 
             padding: 0 5%;
         }
 
@@ -53,44 +57,68 @@
             text-shadow: 0 0 15px rgba(179, 224, 255, 0.4);
             margin-bottom: 15px;
         }
+        
+        #sign-in-container {
+            margin-top: 30px;
+            padding: 20px 30px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.6); 
+            border: var(--glass-border);
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
 
-        /* 👇 सुभाषित ओळींसाठी सुधारित स्टाईल */
+        /* प्रतीक्षा संदेश (Waiting Message) */
+        #waiting-message {
+            padding: 20px;
+            color: #FFD700; 
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            display: none; 
+        }
+        
+        #user-info {
+            color: var(--accent);
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+        
         .subhasita-line {
-            /* गडद रंगासाठी opacity कमी केली */
             opacity: 0.6; 
             line-height: 1.6;
             font-size: clamp(1rem, 2vw, 1.2rem);
             margin: 5px 0;
-            /* गडद पार्श्वभूमीवर अधिक स्पष्टता आणण्यासाठी थोडी टेक्स्ट शॅडो दिली */
             text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); 
         }
 
         /* ========================================================= */
-        /* 3. MAIN CONTENT LAYOUT */
+        /* 3. MAIN CONTENT LAYOUT (रिस्पॉन्सिव्ह ग्रिड) */
         /* ========================================================= */
         main {
             width: 90%;
-            /* MAX WIDTH कमी केली */
-            max-width: 650px; 
+            max-width: 900px; /* 3-Column Layoutसाठी रुंदी वाढवली */
             margin-top: 50px;
             display: grid;
-            gap: 20px; 
-            
-            /* पॅनलची किमान रुंदी 280px केली */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+            /* 100 panelsसाठी प्रति ओळ 3 पॅनल (किमान 220px) */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            display: none; /* बाय डीफॉल्ट डॅशबोर्ड लपवलेला */
         }
-
-        /* ========================================================= */
-        /* 4. LIQUID GLASS CARD STYLES */
-        /* ========================================================= */
+        
+        main.signed-in {
+            display: grid; /* साइन-इन झाल्यावर डॅशबोर्ड दिसेल */
+        }
+        
         .liquid-glass {
             background: var(--glass-bg);
             border: var(--glass-border);
             backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur)); /* Safari support */
+            -webkit-backdrop-filter: blur(var(--blur)); 
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(0,0,0,0.8); 
             transition: var(--transition-speed);
             display: flex;
             flex-direction: column;
@@ -98,8 +126,8 @@
         }
 
         .liquid-glass:hover {
-            background: rgba(255, 255, 255, 0.14);
-            box-shadow: 0 5px 30px rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.70); 
+            box-shadow: 0 5px 30px rgba(0,0,0,0.9);
             transform: translateY(-2px); 
         }
 
@@ -123,7 +151,7 @@
             padding: 8px 16px;
             border-radius: 12px;
             border: var(--glass-border);
-            background: rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.3); 
             color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
@@ -131,20 +159,17 @@
         }
 
         a:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5); 
             box-shadow: 0 0 10px rgba(179, 224, 255, 0.3);
         }
 
-        /* 👇 फुटरसाठी सुधारित स्टाईल */
         footer {
             margin-top: 50px; 
             text-align: center;
             font-size: 0.9rem;
-            /* गडद रंगासाठी opacity खूप कमी केली */
             opacity: 0.4; 
             padding: 20px 0;
             width: 100%;
-            /* गडद पार्श्वभूमीवर स्पष्टता आणण्यासाठी टेक्स्ट शॅडो दिली */
             text-shadow: 0 0 3px rgba(0, 0, 0, 1.0); 
         }
     </style>
@@ -152,6 +177,33 @@
 <body>
     <header>
         <h1>ब्रह्मविद्या कल्पद्रुम</h1>
+        
+        <div id="sign-in-container">
+            <p style="margin: 0; opacity: 0.8;">कृपया डॅशबोर्ड पाहण्यासाठी Google ने लॉग इन करा:</p>
+            <div id="g_id_onload"
+                 data-client_id="तुमची_Google_Client_ID_येथे_टाका"
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-callback="handleCredentialResponse"
+                 data-auto_prompt="false">
+            </div>
+            
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="rectangular"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left">
+            </div>
+
+            <div id="waiting-message">
+                ✅ **तुमची विनंती प्राप्त झाली आहे!** ॲडमिन कडून मंजुरी मिळताच डॅशबोर्ड आपोआप लोड होईल.
+                <br><small style="opacity: 0.7;">(कृपया पेज बंद करू नका)</small>
+            </div>
+            
+            <p id="user-info" style="display: none;">Welcome, <span id="display-name"></span></p>
+        </div>
         
         <div style="margin-top: 30px;">
             <p class="subhasita-line">श्रीकृष्णरावो म्हणे उद्धवदेवा : हा ज्ञानरत्नाचा ठेवा</p>
@@ -161,42 +213,169 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <div class="liquid-glass">
             <div>
-                <h2>सुमनमाला</h2>
+                <h2>१. सुमनमाला</h2>
                 <div class="tags">काव्य, ग्रंथ</div>
             </div>
             <a href="https://rohanborsa6600-tech.github.io/Sumanmala1/#section-14">पूर्ण दृश्य पाहा</a>
         </div>
-
+        
         <div class="liquid-glass">
             <div>
-                <h2>सूत्रपाठ</h2>
+                <h2>२. सूत्रपाठ</h2>
                 <div class="tags">अभ्यास, पाठ</div>
             </div>
             <a href="https://rohanborsa6600-tech.github.io/Sutrapath-/#auto-section-23">पूर्ण दृश्य पाहा</a>
         </div>
-
+        
         <div class="liquid-glass">
             <div>
-                <h2>गीतापाठ</h2>
+                <h2>३. गीतापाठ</h2>
                 <div class="tags">ग्रंथ, अध्यात्म</div>
             </div>
             <a href="https://rohanborsa6600-tech.github.io/Geeta-/index.html">पूर्ण दृश्य पाहा</a>
         </div>
+        
+        <div class="liquid-glass">
+            <div>
+                <h2>४. जीवनसूत्र</h2>
+                <div class="tags">विविध, संकलन</div>
+            </div>
+            <a href="#">पूर्ण दृश्य पाहा</a>
+        </div>
+        
+        <div class="liquid-glass">
+            <div>
+                <h2>५. संतवाणी</h2>
+                <div class="tags">अध्यात्म, साहित्य</div>
+            </div>
+            <a href="#">पूर्ण दृश्य पाहा</a>
+        </div>
 
         <div class="liquid-glass">
             <div>
-                <h2>स्थळपोथी</h2>
+                <h2>६. स्थळपोथी</h2>
                 <div class="tags">इतिहास, स्थळ</div>
             </div>
             <a href="https://rohanborsa6600-tech.github.io/Adx/">पूर्ण दृश्य पाहा</a>
         </div>
-    </main>
+        </main>
 
     <footer>
         श्री देवदत्त आश्रम © सर्व हक्क राखीव
     </footer>
+    
+    <script>
+        // 💡 **तुमची Firebase क्रेडेंशियल्स इथे टाका**
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRk1KxlcFtPT_4vcUkiKCJGAf9vmNkSno",
+            authDomain: "adx2122-e0488.firebaseapp.com",
+            projectId: "adx2122-e0488",
+            storageBucket: "adx2122-e0488.firebasestorage.app",
+            messagingSenderId: "199956925239",
+            appId: "1:199956925239:web:a5e0d33199f1e992fae8b2"
+        };
+
+        // Firebase ॲप सुरू करा
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const userCollection = db.collection("logged_users"); 
+
+        // ऑथेंटिकेशन झाल्यावर कॉल होणारे मुख्य फंक्शन
+        function handleCredentialResponse(response) {
+            const googleCredential = firebase.auth.GoogleAuthProvider.credential(response.credential);
+
+            auth.signInWithCredential(googleCredential)
+                .then((result) => {
+                    checkUserApproval(result.user);
+                })
+                .catch((error) => {
+                    console.error("Firebase Sign-In Failed:", error);
+                    alert("लॉग इन अयशस्वी झाले. कृपया पुन्हा प्रयत्न करा.");
+                });
+        }
+
+        // युजरची स्थिती तपासणारे आणि डेटाबेसमध्ये नोंद करणारे फंक्शन
+        function checkUserApproval(user) {
+            const userDocRef = userCollection.doc(user.email);
+            const userName = user.displayName;
+
+            userDocRef.get().then((doc) => {
+                if (doc.exists) {
+                    const status = doc.data().status;
+                    if (status === 'approved') {
+                        displayDashboard(userName);
+                    } else {
+                        // ॲडमिनची मंजुरी बाकी आहे
+                        displayWaiting(userName, userDocRef);
+                    }
+                } else {
+                    // युजर नवीन आहे, 'pending' म्हणून नोंद करा
+                    logNewUser(user, userDocRef);
+                    displayWaiting(userName, userDocRef);
+                }
+            }).catch(error => {
+                console.error("Error checking document:", error);
+                alert("डेटा तपासताना त्रुटी आली.");
+            });
+        }
+        
+        // नवीन युजरची 'pending' स्थितीमध्ये नोंद करणारे फंक्शन
+        function logNewUser(user, userDocRef) {
+            const deviceName = navigator.userAgent; 
+            const platform = navigator.platform;
+
+            userDocRef.set({
+                name: user.displayName,
+                email: user.email,
+                first_login: firebase.firestore.FieldValue.serverTimestamp(),
+                last_login: firebase.firestore.FieldValue.serverTimestamp(),
+                status: 'pending', // 🛑 ॲडमिन अप्रूव्हलसाठी ही महत्त्वाची ओळ आहे
+                device_info: {
+                    userAgent: deviceName,
+                    platform: platform,
+                }
+            });
+        }
+
+        // प्रतीक्षा संदेश दाखवणारे आणि Real-time ऐकणारे (Listener) फंक्शन
+        function displayWaiting(userName, userDocRef) {
+            document.getElementById('sign-in-container').style.display = 'none';
+            document.getElementById('waiting-message').style.display = 'block';
+            
+            document.getElementById('display-name').textContent = userName;
+            document.getElementById('user-info').style.display = 'block';
+
+            // ॲडमिन अप्रूव्हलसाठी Real-time Listener सेट करा
+            // ॲडमिनने स्टेटस बदलल्यास, डॅशबोर्ड आपोआप लोड होईल
+            userDocRef.onSnapshot((doc) => {
+                if (doc.exists && doc.data().status === 'approved') {
+                    document.getElementById('waiting-message').style.display = 'none';
+                    displayDashboard(userName);
+                }
+            });
+        }
+
+        // डॅशबोर्ड दृश्यमान (Visible) करणारे फंक्शन
+        function displayDashboard(userName) {
+            document.getElementById('sign-in-container').style.display = 'none';
+            document.getElementById('waiting-message').style.display = 'none';
+            document.getElementById('main-content').classList.add('signed-in');
+            document.getElementById('display-name').textContent = userName;
+            document.getElementById('user-info').style.display = 'block';
+        }
+
+        // पेज लोड झाल्यावर तपासणी: युजर आधीच लॉग इन आहे का?
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                checkUserApproval(user);
+            }
+        });
+
+        window.handleCredentialResponse = handleCredentialResponse;
+    </script>
 </body>
 </html>
